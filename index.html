@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Atoms to Aggregates — ML for Aerosol Collision Kernels</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- =================== NAVIGATION =================== -->
+  <nav id="navbar">
+    <div class="nav-brand">AeroNano · ML</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#intro"     class="nav-link" data-section="intro">Introduction</a></li>
+      <li><a href="#paper1"    class="nav-link" data-section="paper1">Paper 1 · PBE</a></li>
+      <li><a href="#paper2"    class="nav-link" data-section="paper2">Paper 2 · Transition</a></li>
+      <li><a href="#paper3"    class="nav-link" data-section="paper3">Paper 3 · Nano</a></li>
+      <li><a href="#synthesis" class="nav-link" data-section="synthesis">Synthesis</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">&#9776;</button>
+  </nav>
+
+  <!-- ===================== SECTION 1: INTRODUCTION ===================== -->
+  <section id="intro" class="section section-hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Master Seminar &mdash; Aerosol &amp; Nanotechnology &mdash; SS 2026</span>
+        <h1 class="hero-title">
+          Bridging the Gap:<br>
+          <span class="highlight-cyan">Machine Learning</span> for<br>
+          <span class="highlight-orange">Aerosol Collision Kernels</span>
+        </h1>
+        <p class="hero-subtitle">
+          Three papers. One fundamental gap. A new research direction at the intersection of
+          Physics-Informed Neural Networks, transition-regime theory, and molecular dynamics.
+        </p>
+      </div>
+
+      <!-- Bridge Diagram -->
+      <div class="bridge-diagram">
+        <div class="bridge-node bridge-left">
+          <span class="bridge-regime-label">Continuum</span>
+          <span class="bridge-kn">$Kn \to 0$</span>
+          <span class="bridge-eq">$\beta = 4\pi D_{12} r_c$</span>
+          <span class="bridge-desc">Diffusion-controlled<br>Large particles</span>
+        </div>
+        <div class="bridge-center">
+          <div class="bridge-arrow-line"></div>
+          <div class="bridge-arrow-label">
+            <span class="bridge-transition-text">Transition Regime</span>
+            <span class="bridge-kn-range">$0.1 &lt; Kn_D &lt; 10$</span>
+            <span class="bridge-paper-hint">← Paper 2 bridges this →</span>
+          </div>
+          <div class="bridge-arrow-line"></div>
+        </div>
+        <div class="bridge-node bridge-right">
+          <span class="bridge-regime-label">Free-Molecular</span>
+          <span class="bridge-kn">$Kn \to \infty$</span>
+          <span class="bridge-eq">$\beta \propto \bar{c}\, r_c^2$</span>
+          <span class="bridge-desc">Ballistic collisions<br>Sub-3 nm clusters</span>
+        </div>
+      </div>
+
+      <!-- Paper Cards -->
+      <div class="paper-cards">
+        <a href="#paper1" class="paper-card card-cyan" style="text-decoration:none;">
+          <div class="paper-card-number">Paper 01 &mdash; System Level (Macro)</div>
+          <h3>Physics-Informed Deep Learning for Particle Aggregation &amp; Breakage</h3>
+          <p class="paper-authors">Chen, Wang, Meng, Luo (2021) &middot; Chemical Engineering Journal</p>
+          <p class="paper-summary">PINNs solve the Population Balance Equation (PBE) with the governing PDE as a physics loss function — providing a physically consistent macro-scale simulation framework.</p>
+          <span class="tag">PINN &middot; PBE &middot; Aggregation</span>
+        </a>
+        <a href="#paper2" class="paper-card card-orange" style="text-decoration:none;">
+          <div class="paper-card-number">Paper 02 &mdash; Theory Bridge (Meso)</div>
+          <h3>Transition Regime Collision Kernel from Mean First Passage Times</h3>
+          <p class="paper-authors">Gopalakrishnan &amp; Hogan Jr. (2011) &middot; Aerosol Science &amp; Technology</p>
+          <p class="paper-summary">Defines a dimensionless kernel $H(Kn_D)$ bridging continuum and free-molecular regimes via Langevin dynamics and MFPT theory. Uses hard-sphere assumptions.</p>
+          <span class="tag">Kn &middot; MFPT &middot; Hard-Sphere</span>
+        </a>
+        <a href="#paper3" class="paper-card card-green" style="text-decoration:none;">
+          <div class="paper-card-number">Paper 03 &mdash; Nano World (Micro)</div>
+          <h3>Neural Network Parametrized Collision Rate for &lt;3 nm TiO₂ Nanoclusters</h3>
+          <p class="paper-authors">Tamadate, Yang, Hogan Jr. (2022) &middot; Aerosol Science &amp; Technology</p>
+          <p class="paper-summary">MLP trained on Molecular Dynamics simulation data predicts collision rates below 3 nm where standard theory fails. A black-box, material-specific model.</p>
+          <span class="tag">MLP &middot; MD &middot; Sub-3 nm &middot; TiO₂</span>
+        </a>
+      </div>
+
+      <!-- Gap Highlight -->
+      <div class="gap-highlight">
+        <div class="gap-highlight-icon">&#9889;</div>
+        <div>
+          <strong>The Research Gap:</strong> We have (1) PINN frameworks for macro-scale systems,
+          (2) transition-regime theory as a physical bridge, and (3) atomic-scale MD data for the nano-world.
+          However, <em>no model integrates MD-derived nano-physics into a physically-constrained PINN
+          framework for generalizable aerosol Population Balance Equations.</em>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="scroll-arrow">&#8595;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2: PAPER 1 — PBE + PINNs ===================== -->
+  <section id="paper1" class="section">
+    <div class="container">
+      <span class="section-label">Paper 01 &mdash; Chen, Wang, Meng &amp; Luo (2021)</span>
+      <h2 class="section-title">Population Balance Equations<br>Meet Physics-Informed Neural Networks</h2>
+
+      <div class="content-grid">
+        <!-- Text Left -->
+        <div class="content-text">
+          <p class="section-desc">
+            The <strong>Population Balance Equation (PBE)</strong> describes how a particle size
+            distribution $n(v, t)$ evolves over time due to aggregation (coalescence) and breakage.
+            Traditional numerical solvers (finite volume, method of moments) are expensive and struggle
+            with complex, data-driven collision kernels. Chen et al. solve this by embedding the PBE
+            as a <em>physics loss</em> inside a neural network.
+          </p>
+
+          <div class="eq-block">
+            $$\frac{\partial n(v,t)}{\partial t} =
+            \frac{1}{2}\!\int_0^v \!\beta(v'\!,v\!-\!v')\,n(v')\,n(v\!-\!v')\,dv'
+            - \int_0^\infty \!\beta(v,v')\,n(v)\,n(v')\,dv'$$
+          </div>
+
+          <div class="info-box">
+            <h4>How PINNs solve the PBE</h4>
+            <ul>
+              <li>The NN approximates $n(v, t;\,\theta)$ — the full particle size distribution</li>
+              <li>Physics loss: $\mathcal{L}_\text{PDE} = \left\|\partial_t n - \mathcal{C}[n;\,\beta]\right\|^2$</li>
+              <li>Data loss: $\mathcal{L}_\text{data} = \left\|n - n_\text{meas}\right\|^2$</li>
+              <li>Total: $\mathcal{L} = \mathcal{L}_\text{PDE} + \lambda\,\mathcal{L}_\text{data}$</li>
+              <li>Automatic differentiation computes $\partial_t n$ exactly from the network</li>
+            </ul>
+          </div>
+
+          <div class="info-box orange">
+            <h4>&#9888; The Gap in Paper 1</h4>
+            <p>
+              The collision kernel $\beta$ is assumed to be a simplified, <strong>analytical function</strong>
+              (constant or purely Brownian/continuum). The PINN framework has no mechanism to
+              incorporate atomic-scale collision data from MD simulations, making it blind to
+              the true physics below 3 nm.
+            </p>
+          </div>
+        </div>
+
+        <!-- Visualization Right -->
+        <div class="content-viz">
+          <div class="viz-title">Interactive 01 &mdash; Particle Size Distribution (Smoluchowski PBE, $K_{ij} = 1$)</div>
+          <div id="pbe-plot" style="width:100%; height:300px;"></div>
+          <div class="slider-group">
+            <div class="slider-row">
+              <span class="slider-label">Time: <span id="pbe-time-val">t = 0.00</span></span>
+              <input type="range" id="pbe-slider" min="0" max="99" value="0" step="1">
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; margin-top:12px;">
+            <button class="btn btn-primary" id="pbe-play">&#9654; Play</button>
+            <button class="btn btn-ghost"    id="pbe-reset">&#8635; Reset</button>
+          </div>
+          <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:12px; line-height:1.6;">
+            Constant kernel $K_{ij} = 1$. Initial condition: monodisperse monomers $N_1(0)=1$.
+            The distribution broadens and shifts to larger cluster sizes $k$ over time as aggregation proceeds.
+            Analytical solution: $N_k(t) = \tau^{k-1}\!/(1+\tau)^{k+1}$, $\tau = t/2$.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3: PAPER 2 — Transition Regime ===================== -->
+  <section id="paper2" class="section">
+    <div class="container">
+      <span class="section-label">Paper 02 &mdash; Gopalakrishnan &amp; Hogan Jr. (2011)</span>
+      <h2 class="section-title">The Theory Bridge:<br>Transition Regime Collision Kernel</h2>
+
+      <div class="content-grid reverse">
+        <!-- Visualization Left -->
+        <div class="content-viz">
+          <div class="viz-title">Interactive 02 &mdash; Dimensionless Kernel $H(Kn_D)$ — Dahneke Interpolation</div>
+          <div id="regime-plot" style="width:100%; height:320px;"></div>
+          <div class="slider-group" style="margin-top:12px;">
+            <div class="slider-row">
+              <span class="slider-label">$\log_{10}(Kn_D)$: <span id="regime-kn-display">Kn<sub>D</sub> = 1.00</span></span>
+              <input type="range" id="regime-slider" min="-3" max="3" value="0" step="0.05">
+            </div>
+          </div>
+          <div class="regime-readout" id="regime-readout">
+            $H(1.00) = 1.285$ &nbsp;&middot;&nbsp; Regime: <span id="regime-label" class="regime-tag transition-tag">Transition</span>
+          </div>
+        </div>
+
+        <!-- Text Right -->
+        <div class="content-text">
+          <p class="section-desc">
+            The <strong>diffusive Knudsen number</strong>
+            $Kn_D = \bar{c}_\text{rel}\,r_c\,/\,(4\,D_{12})$
+            quantifies whether a collision is governed by diffusion (small $Kn_D$, large particles)
+            or ballistic motion (large $Kn_D$, nanoclusters). Using Mean First Passage Time theory
+            and Langevin dynamics, Gopalakrishnan &amp; Hogan derive a dimensionless correction
+            factor $H$ that captures the full transition.
+          </p>
+
+          <div class="eq-block">
+            $$\beta = 4\pi\,D_{12}\,r_c \cdot H(Kn_D)$$
+          </div>
+
+          <div class="eq-block" style="border-left-color: var(--accent-orange);">
+            $$H(Kn_D) = \frac{1}{1 + Kn_D} + \frac{\pi}{4}\,Kn_D$$
+          </div>
+
+          <div class="info-box">
+            <h4>Regime Limits</h4>
+            <ul>
+              <li><strong>Continuum</strong> ($Kn_D \to 0$): $H \to 1$ — purely diffusion-controlled (Smoluchowski)</li>
+              <li><strong>Transition</strong> ($0.1 \lesssim Kn_D \lesssim 10$): Both mechanisms compete, $H$ has a shallow minimum then rises</li>
+              <li><strong>Free-Molecular</strong> ($Kn_D \to \infty$): $H \sim \tfrac{\pi}{4}\,Kn_D$ — ballistic, geometric cross-section dominates</li>
+            </ul>
+          </div>
+
+          <div class="info-box orange">
+            <h4>&#9888; The Gap in Paper 2</h4>
+            <p>
+              The model assumes <strong>hard-sphere particles</strong> in a structureless background gas.
+              It ignores van der Waals forces, electrostatic charge interactions, and structural
+              rearrangements of real nanoclusters. Below 3 nm, these effects become dominant
+              and the $H(Kn_D)$ curve deviates significantly from MD-derived values.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4: PAPER 3 — MD + MLP ===================== -->
+  <section id="paper3" class="section">
+    <div class="container">
+      <span class="section-label">Paper 03 &mdash; Tamadate, Yang &amp; Hogan Jr. (2022)</span>
+      <h2 class="section-title">The Nano World:<br>MD-Informed Neural Network for Sub-3 nm Clusters</h2>
+
+      <div class="content-grid">
+        <!-- Text Left -->
+        <div class="content-text">
+          <p class="section-desc">
+            Below 3 nm, particles are small enough that individual atomic interactions dominate the
+            collision dynamics. Molecular Dynamics (MD) simulations integrate Newton's equations for
+            every atom, capturing van der Waals forces, atomic structure, and kinetic energy exchange —
+            but at enormous computational cost. Tamadate et al. train an MLP on thousands of
+            MD collision trajectories to create a fast surrogate model.
+          </p>
+
+          <div class="info-box green">
+            <h4>MD Simulation Variables</h4>
+            <ul>
+              <li><strong>Impact parameter $b$</strong>: perpendicular offset of the approach trajectory</li>
+              <li><strong>Relative velocity $v_\text{rel}$</strong>: initial kinetic energy of the cluster pair</li>
+              <li><strong>Cluster charges $q_1, q_2$</strong>: electrostatic contributions to trajectory</li>
+              <li><strong>Temperature $T$</strong>: thermal energy affecting sticking probability</li>
+              <li><strong>Outcome</strong>: collision probability $P_c(b, v)$ — stick, bounce, or reactive</li>
+            </ul>
+          </div>
+
+          <div class="eq-block" style="border-left-color: var(--accent-green);">
+            $$\beta_\text{MD} = 2\pi \int_0^\infty\!\!\int_0^\infty P_c(b,v)\;b\;f(v)\;v\;db\;dv$$
+          </div>
+
+          <div class="info-box orange">
+            <h4>&#9888; The Gap in Paper 3</h4>
+            <p>
+              The MLP is a <strong>black-box</strong> model. It has no physics constraints
+              (not a PINN), is strictly limited to TiO₂ clusters, and provides no generalizability
+              to other materials, size ranges, or temperature conditions not covered by the MD training data.
+              It cannot be embedded into a PBE without additional physics-informed regularization.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2D Collision Canvas Right -->
+        <div class="content-viz">
+          <div class="viz-title">Interactive 03a &mdash; 2D Cluster Collision: Impact Parameter $b$</div>
+          <canvas id="collision-canvas" width="540" height="220"
+                  style="width:100%; border-radius:8px; background:#050510; display:block;"></canvas>
+          <div class="slider-group" style="margin-top:12px;">
+            <div class="slider-row">
+              <span class="slider-label">$b$: <span id="b-val">0.0</span> R</span>
+              <input type="range" id="b-slider" min="0" max="3.5" value="0" step="0.05">
+            </div>
+            <div class="slider-row">
+              <span class="slider-label">Speed $v$: <span id="v-val">2.0</span></span>
+              <input type="range" id="v-slider" min="0.5" max="5" value="2" step="0.1">
+            </div>
+          </div>
+          <div class="viz-status" id="collision-status">&mdash;</div>
+          <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:8px; line-height:1.5;">
+            Collision iff $b \leq R_1 + R_2 = 2R$. In reality, van der Waals attraction
+            captures trajectories with $b > 2R$ — a key deviation from the hard-sphere model.
+          </p>
+        </div>
+      </div>
+
+      <!-- 3D Collision — Full Width Row -->
+      <div class="full-width-section" style="margin-top:70px;">
+        <span class="section-label">Interactive 03b &mdash; 3D Nanocluster Collision (Three.js)</span>
+        <div class="content-grid" style="margin-top:20px; align-items:center;">
+          <!-- 3D Canvas -->
+          <div id="canvas3d-container">
+            <canvas id="canvas3d"></canvas>
+          </div>
+          <!-- Controls + Text -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.8;">
+              Two TiO₂ nanoclusters approach each other. Adjust the impact parameter $b$
+              to see how the perpendicular offset affects whether a collision occurs.
+              In the sub-3 nm regime, van der Waals forces bend trajectories, making the
+              <em>effective</em> collision cross-section larger than the geometric one.
+            </p>
+            <div class="slider-group">
+              <div class="slider-row">
+                <span class="slider-label">Impact $b$: <span id="b3d-val">0.0</span> R</span>
+                <input type="range" id="b3d-slider" min="0" max="4" value="0" step="0.1">
+              </div>
+              <div class="slider-row">
+                <span class="slider-label">Speed: <span id="v3d-val">1.0</span></span>
+                <input type="range" id="v3d-slider" min="0.2" max="3" value="1" step="0.1">
+              </div>
+            </div>
+            <div class="info-box green" style="margin:0;">
+              <h4>Why 3D matters</h4>
+              <p>Real nanoclusters are not perfect spheres. Their faceted atomic structure
+              and non-uniform charge distribution create anisotropic collision cross-sections
+              that cannot be captured by a single scalar impact parameter $b$.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5: SYNTHESIS ===================== -->
+  <section id="synthesis" class="section">
+    <div class="container">
+      <span class="section-label">Synthesis &mdash; Bringing It All Together</span>
+      <h2 class="section-title">The Gap, The Opportunity<br>&amp; The Research Question</h2>
+
+      <!-- Gap Table -->
+      <table class="gap-table">
+        <thead>
+          <tr>
+            <th>Paper</th>
+            <th>Core Contribution</th>
+            <th>Scale</th>
+            <th>Key Limitation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Chen et al. (2021)</td>
+            <td>PINN framework for PBE — physically consistent, automatic differentiation through the PDE</td>
+            <td><span class="badge badge-cyan">Macro</span></td>
+            <td>Kernel $\beta$ is analytical &amp; simplified — no nano-scale data can enter the model</td>
+          </tr>
+          <tr>
+            <td>Gopalakrishnan &amp; Hogan (2011)</td>
+            <td>Dimensionless kernel $H(Kn_D)$ — bridges continuum ↔ free-molecular via MFPT + Langevin dynamics</td>
+            <td><span class="badge badge-orange">Meso</span></td>
+            <td>Hard-sphere only — ignores van der Waals forces, charges, structural deformations</td>
+          </tr>
+          <tr>
+            <td>Tamadate et al. (2022)</td>
+            <td>MLP on MD data — accurate $\beta$ for sub-3 nm TiO₂ where standard theory breaks down</td>
+            <td><span class="badge badge-green">Nano</span></td>
+            <td>Black-box model — TiO₂-specific, no physics constraints, no generalizability</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Research Question Box -->
+      <div class="research-question">
+        <p>
+          &ldquo;How can Physics-Informed Neural Networks (PINNs) for Population Balance Equations
+          be extended to <em>incorporate atomic-scale collision data from MD simulations</em> in the
+          transition regime, while maintaining <em>physical generalizability across materials</em>?&rdquo;
+        </p>
+      </div>
+
+      <!-- PINN Architecture Diagram -->
+      <div style="margin-top:48px;">
+        <span class="section-label">Interactive 05 &mdash; Proposed PINN Architecture</span>
+        <p style="color:var(--text-secondary); font-size:0.9rem; margin:10px 0 20px; max-width:700px; line-height:1.7;">
+          A neural network learns the collision kernel $\beta(Kn_D, q_1, q_2, T)$ subject to two
+          simultaneous constraints: physical consistency with the PBE, and fidelity to MD simulation data.
+        </p>
+        <div class="content-viz" style="min-height:460px; padding:20px;">
+          <svg id="pinn-svg" width="100%" height="440" viewBox="0 0 760 440"
+               preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+      </div>
+
+      <!-- Roadmap Steps -->
+      <div style="margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
+        <div class="info-box" style="margin:0;">
+          <h4>Step 1 &mdash; Expand MD Data</h4>
+          <p>Run MD simulations for diverse cluster materials (SiO₂, Fe₂O₃, C) and charge states
+          to generate a rich $(b, v, T, q_1, q_2) \to \beta_\text{MD}$ training set beyond TiO₂.</p>
+        </div>
+        <div class="info-box orange" style="margin:0;">
+          <h4>Step 2 &mdash; Physics-Constrained Learning</h4>
+          <p>Train a PINN where the neural network predicts $\beta(Kn_D)$ with soft physics constraints:
+          $H \to 1$ as $Kn_D \to 0$ and $H \sim \tfrac{\pi}{4}\,Kn_D$ as $Kn_D \to \infty$.</p>
+        </div>
+        <div class="info-box green" style="margin:0;">
+          <h4>Step 3 &mdash; Embed in PBE Solver</h4>
+          <p>Use $\beta_\text{NN}(Kn_D, q, T)$ as the collision kernel in the Population Balance
+          Equation — enabling physically consistent, data-driven aerosol simulation from nano to macro scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Aerosol &amp; Nanotechnology Seminar &mdash; Master of Chemical Engineering &mdash; Sommersemester 2026</p>
+    <p style="margin-top:8px; opacity:0.5; font-size:0.75rem;">
+      Chen et al. (2021) &middot; Gopalakrishnan &amp; Hogan (2011) &middot; Tamadate, Yang &amp; Hogan (2022)
+    </p>
+  </footer>
+
+  <!-- =================== CDN LIBRARIES =================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+  <!-- =================== APP SCRIPTS =================== -->
+  <script src="js/navigation.js"></script>
+  <script src="js/pbe_simulation.js"></script>
+  <script src="js/regime_slider.js"></script>
+  <script src="js/collision_2d.js"></script>
+  <script src="js/collision_3d.js"></script>
+  <script src="js/pinn_diagram.js"></script>
+
+</body>
+</html>
