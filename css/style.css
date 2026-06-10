@@ -753,6 +753,86 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ============================================================
+   PBNN SVG CHART
+   ============================================================ */
+svg.pbnn-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.pbnn-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  padding: 6px 2px 2px;
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+.pbnn-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pbnn-sw {
+  display: inline-block;
+  width: 18px;
+  border-top-width: 3px;
+  border-top-style: solid;
+}
+
+.pbnn-control {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 12px 16px 14px;
+}
+
+.pbnn-ctl-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.pbnn-readout {
+  display: flex;
+  gap: 18px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.pbnn-readout > div { text-align: right; }
+
+.pbnn-v {
+  font-size: 1.3rem;
+  color: #48C5CB;
+  line-height: 1;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.pbnn-v.pbnn-amber { color: #E8913C; }
+
+.pbnn-k {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  margin-top: 3px;
+}
+
+.pbnn-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ============================================================
    PAPER METADATA
    ============================================================ */
 .paper-meta {

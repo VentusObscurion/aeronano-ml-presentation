@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>From Atoms to Aggregates — ML for Aerosol Collision Kernels</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script>
     window.MathJax = {
       tex: {
@@ -132,19 +135,68 @@
           <div id="pinn-compare-plot" style="width:100%; height:280px;"></div>
           <div class="slider-group" style="margin-top:10px;">
             <div class="slider-row">
-              <span class="slider-label">Noise level: <span id="noise-val">0.4</span></span>
-              <input type="range" id="noise-slider" min="0.05" max="1.2" value="0.4" step="0.05" style="touch-action:none;">
+        </div>
+        <div class="content-viz">
+          <div class="viz-title">Interactive &mdash; Particle Size Distribution over Aggregation Time</div>
+
+          <svg class="pbnn-chart" viewBox="0 0 600 300" role="img"
+               aria-label="Particle size distribution: analytical solution, PBNN and plain ANN compared over time.">
+            <g stroke="rgba(255,255,255,0.07)" stroke-width="1">
+              <line x1="70" y1="54"  x2="560" y2="54"/>
+              <line x1="70" y1="108" x2="560" y2="108"/>
+              <line x1="70" y1="162" x2="560" y2="162"/>
+              <line x1="70" y1="216" x2="560" y2="216"/>
+            </g>
+            <g stroke="#444860" stroke-width="1.5">
+              <line x1="70" y1="30" x2="70" y2="268"/>
+              <line x1="70" y1="268" x2="560" y2="268"/>
+            </g>
+            <g fill="#8888aa" font-family="IBM Plex Mono,monospace" font-size="11">
+              <text x="64" y="58"  text-anchor="end">0.100</text>
+              <text x="64" y="112" text-anchor="end">0.075</text>
+              <text x="64" y="166" text-anchor="end">0.050</text>
+              <text x="64" y="220" text-anchor="end">0.025</text>
+              <text x="64" y="272" text-anchor="end">0</text>
+              <text x="70"  y="284" text-anchor="middle" font-size="10">0</text>
+              <text x="315" y="284" text-anchor="middle" font-size="10">5</text>
+              <text x="560" y="284" text-anchor="middle" font-size="10">10</text>
+              <text x="315" y="297" text-anchor="middle" font-size="11">Particle volume  v / v&#x2080;</text>
+            </g>
+            <text x="18" y="150" fill="#8888aa" font-family="IBM Plex Mono,monospace"
+                  font-size="11" text-anchor="middle" transform="rotate(-90 18 150)">Number density</text>
+            <path id="pbnn-ref"  fill="none" stroke="#5C6678" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <path id="pbnn-ann"  fill="none" stroke="#D9685A" stroke-width="2"   stroke-dasharray="2 5" stroke-linecap="round"/>
+            <path id="pbnn-ana"  fill="none" stroke="#48C5CB" stroke-width="3"/>
+            <path id="pbnn-pbnn" fill="none" stroke="#E8913C" stroke-width="2.2" stroke-dasharray="8 4" stroke-linecap="round"/>
+          </svg>
+
+          <div class="pbnn-legend">
+            <span><span class="pbnn-sw" style="border-color:#48C5CB"></span>Analytical (time T)</span>
+            <span><span class="pbnn-sw" style="border-color:#E8913C; border-top-style:dashed"></span>PBNN (with physics)</span>
+            <span><span class="pbnn-sw" style="border-color:#D9685A; border-top-style:dotted"></span>Plain ANN (no physics)</span>
+            <span><span class="pbnn-sw" style="border-color:#5C6678; border-top-style:dashed"></span>Start T&nbsp;=&nbsp;0</span>
+          </div>
+
+          <div class="pbnn-control">
+            <div class="pbnn-ctl-top">
+              <div>
+                <div class="viz-title" style="margin-bottom:4px;">Aggregation time T</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">Move the slider &rarr;</div>
+              </div>
+              <div class="pbnn-readout">
+                <div><div class="pbnn-v" id="pbnn-tval">0.00</div><div class="pbnn-k">time T</div></div>
+                <div><div class="pbnn-v pbnn-amber" id="pbnn-nval">1.000</div><div class="pbnn-k">N/N&#x2080;</div></div>
+              </div>
             </div>
+            <input id="pbnn-slider" type="range" min="0" max="1" step="0.01" value="0" style="touch-action:none;" aria-label="Aggregation time T">
+            <div class="pbnn-scale"><span>T = 0</span><span>T = 0.5</span><span>T = 1.0</span></div>
           </div>
-          <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
-            <button class="btn btn-primary" id="toggle-pinn" style="background:var(--accent-cyan); color:#000; border:none;">&#11044; PINN</button>
-            <button class="btn btn-primary" id="toggle-nn"   style="background:var(--accent-orange); color:#fff; border:none;">&#11044; Plain NN</button>
-            <button class="btn btn-ghost"   id="resample-btn">&#8635; New Sample</button>
-          </div>
+
           <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:10px; line-height:1.6;">
-            The <span style="color:var(--accent-orange); font-weight:600;">Plain NN</span> chases the noise and overfits.
-            The <span style="color:var(--accent-cyan); font-weight:600;">PINN</span> ignores noise &mdash;
-            it knows particles cannot spontaneously appear or disappear.
+            <span style="color:#E8913C; font-weight:600;">PBNN</span> sits almost exactly on the
+            <span style="color:#48C5CB; font-weight:600;">analytical solution</span>.
+            The <span style="color:#D9685A; font-weight:600;">plain ANN</span> overshoots the peak and misses the tail &mdash;
+            it has no physical constraint keeping it honest.
           </p>
         </div>
       </div>
@@ -388,7 +440,6 @@
   </footer>
 
   <!-- =================== CDN LIBRARIES =================== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 

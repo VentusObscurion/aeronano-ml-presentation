@@ -1,142 +1,67 @@
 ﻿/* ============================================================
-   pbe_simulation.js — PINN vs. Plain NN Comparison
-   Shows how PINNs resist noise better than unconstrained NNs.
+   pbe_simulation.js — PBNN vs. Plain ANN (SVG, adapted from Ali)
    Chen et al. (2021) — Continuum Regime
+   Shows aggregation-time evolution of the particle size distribution.
    ============================================================ */
 
 (function () {
   'use strict';
 
-  const KMAX = 20;
-  const xVals = Array.from({ length: KMAX }, (_, i) => i + 1);
+  var X0 = 70, X1 = 560, Y0 = 268, scaleY = 2120, CAP = 0.108;
 
-  /* Smoluchowski analytical PSD at tau=0.35 */
-  function truePSD(k) {
-    const tau = 0.35;
-    return Math.pow(tau, k - 1) / Math.pow(1 + tau, k + 1);
+  function xpx(xi) { return X0 + (xi / 10) * (X1 - X0); }
+  function ypx(v)  { return Y0 - Math.min(v, CAP) * scaleY; }
+
+  /* Analytical number density: normalised gamma-like shape */
+  function nfun(xi, T) {
+    var h = 0.092 / (1 + 1.1 * T);
+    var p = 1 + 0.35 * T;
+    return h * (xi / p) * Math.exp(1 - xi / p);
   }
 
-  const trueY = xVals.map(k => truePSD(k));
-
-  let noiseLevel = 0.4;
-  let showPINN = true;
-  let showNN = true;
-  let seed = 42;
-
-  /* Seeded PRNG */
-  function seededRand() {
-    seed = (seed * 1664525 + 1013904223) >>> 0;
-    return (seed >>> 0) / 4294967295;
+  /* PBNN: tracks analytical with tiny deviation */
+  function pbnnfun(xi, T) {
+    return nfun(xi, T) * (1 + 0.05 * Math.sin(1.4 * xi + 0.7));
   }
 
-  /* Box-Muller normal sample from seeded PRNG */
-  function seededNormal() {
-    const u1 = Math.max(1e-10, seededRand());
-    const u2 = seededRand();
-    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  /* Plain ANN: overshoots peak, wrong tail (no physics) */
+  function annfun(xi, T) {
+    var h = 0.092 / (1 + 1.1 * T) * 1.16;
+    var p = (1 + 0.35 * T) * 0.84;
+    return h * (xi / p) * Math.exp(1 - xi / p);
   }
 
-  function getNoisyData() {
-    /* Lognormal noise: each point multiplied by exp(sigma * N(0,1))
-       so scatter is equally visible at every scale on a log axis */
-    const sigma = noiseLevel * 0.85;
-    return trueY.map(v => v * Math.exp(sigma * seededNormal()));
-  }
-
-  /* Plain NN: sinusoidal overfit visible in log space */
-  function getPlainNNY() {
-    return trueY.map((v, i) => {
-      const logOffset = noiseLevel * (1.4 * Math.sin(i * 1.7 + 0.6)
-        + 0.7 * Math.sin(i * 3.2 + 1.2)
-        + 0.5 * Math.cos(i * 0.9));
-      return v * Math.exp(logOffset);
-    });
-  }
-
-  /* PINN: physically constrained => exact true solution */
-  function getPINNY() { return trueY.slice(); }
-
-  let noisyData = getNoisyData();
-
-  const LAYOUT = {
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    margin: { t: 10, r: 16, b: 52, l: 72 },
-    font: { color: '#8888aa', family: 'Inter, system-ui, sans-serif', size: 11 },
-    xaxis: {
-      title: 'Cluster size  k',
-      gridcolor: 'rgba(255,255,255,0.06)',
-      tickcolor: '#555', linecolor: '#333',
-      range: [0.3, KMAX + 0.7], dtick: 2
-    },
-    yaxis: {
-      title: 'N_k  (log scale)',
-      type: 'log',
-      gridcolor: 'rgba(255,255,255,0.06)',
-      tickcolor: '#555', linecolor: '#333',
-    },
-    showlegend: true,
-    legend: { x: 0.55, y: 0.98,
-      font: { color: '#aaaacc', size: 10 }, bgcolor: 'rgba(0,0,0,0)' }
-  };
-
-  const CONFIG = { responsive: true, displayModeBar: false };
-
-  function buildTraces() {
-    const t = [];
-    t.push({
-      x: xVals, y: noisyData,
-      type: 'scatter', mode: 'markers',
-      marker: { color: '#ffffff', size: 8, opacity: 0.65,
-                line: { color: '#8888aa', width: 1 } },
-      name: 'Measured data (noisy)'
-    });
-    if (showNN) {
-      t.push({
-        x: xVals, y: getPlainNNY(),
-        type: 'scatter', mode: 'lines+markers',
-        line: { color: '#ff6b35', width: 2.5, dash: 'dot' },
-        marker: { color: '#ff6b35', size: 5 },
-        name: 'Plain NN (overfitting)'
-      });
+  function pathFor(fn, T) {
+    var d = '', first = true;
+    for (var xi = 0; xi <= 10.001; xi += 0.1) {
+      var pt = xpx(xi).toFixed(1) + ',' + ypx(fn(xi, T)).toFixed(1);
+      d += (first ? 'M' : 'L') + pt + ' ';
+      first = false;
     }
-    if (showPINN) {
-      t.push({
-        x: xVals, y: getPINNY(),
-        type: 'scatter', mode: 'lines',
-        line: { color: '#00d4ff', width: 3 },
-        name: 'PINN (physics-constrained)'
-      });
-    }
-    return t;
+    return d.trim();
   }
 
-  Plotly.newPlot('pinn-compare-plot', buildTraces(), LAYOUT, CONFIG);
-  function redraw() { Plotly.react('pinn-compare-plot', buildTraces(), LAYOUT, CONFIG); }
+  var elRef  = document.getElementById('pbnn-ref');
+  var elAnn  = document.getElementById('pbnn-ann');
+  var elAna  = document.getElementById('pbnn-ana');
+  var elPbnn = document.getElementById('pbnn-pbnn');
+  var slider = document.getElementById('pbnn-slider');
+  var tval   = document.getElementById('pbnn-tval');
+  var nval   = document.getElementById('pbnn-nval');
 
-  document.getElementById('noise-slider').addEventListener('input', function () {
-    noiseLevel = parseFloat(this.value);
-    document.getElementById('noise-val').textContent = noiseLevel.toFixed(1);
-    seed = 42;
-    noisyData = getNoisyData();
-    redraw();
-  });
+  if (!elRef || !slider) return; /* guard: elements not yet in DOM */
 
-  document.getElementById('resample-btn').addEventListener('click', function () {
-    seed = Math.floor(Math.random() * 999999) + 1;
-    noisyData = getNoisyData();
-    redraw();
-  });
+  elRef.setAttribute('d', pathFor(nfun, 0));
 
-  document.getElementById('toggle-pinn').addEventListener('click', function () {
-    showPINN = !showPINN;
-    this.style.opacity = showPINN ? '1' : '0.35';
-    redraw();
-  });
+  function update() {
+    var T = parseFloat(slider.value);
+    elAna.setAttribute('d',  pathFor(nfun,    T));
+    elPbnn.setAttribute('d', pathFor(pbnnfun, T));
+    elAnn.setAttribute('d',  pathFor(annfun,  T));
+    tval.textContent = T.toFixed(2);
+    nval.textContent = (2 / (T + 2)).toFixed(3);
+  }
 
-  document.getElementById('toggle-nn').addEventListener('click', function () {
-    showNN = !showNN;
-    this.style.opacity = showNN ? '1' : '0.35';
-    redraw();
-  });
+  slider.addEventListener('input', update);
+  update();
 })();
