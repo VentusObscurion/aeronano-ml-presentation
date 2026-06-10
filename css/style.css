@@ -792,6 +792,12 @@ svg.pbnn-chart {
   padding: 12px 16px 14px;
 }
 
+.pbnn-control input[type="range"] {
+  width: 100%;
+  display: block;
+  margin: 6px 0 2px;
+}
+
 .pbnn-ctl-top {
   display: flex;
   justify-content: space-between;
