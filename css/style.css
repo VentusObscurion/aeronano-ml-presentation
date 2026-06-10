@@ -64,12 +64,10 @@ body {
 }
 
 .nav-brand {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--accent-cyan);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-family: 'Courier New', monospace;
+  letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
@@ -138,9 +136,8 @@ body {
    ============================================================ */
 .hero-badge {
   display: inline-block;
-  font-size: 0.7rem;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent-cyan);
   background: rgba(0,212,255,0.08);
@@ -197,8 +194,7 @@ body {
 
 .bridge-regime-label {
   font-size: 0.72rem;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-secondary);
 }
@@ -236,8 +232,7 @@ body {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-primary);
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 
 .bridge-kn-range {
@@ -292,9 +287,8 @@ body {
 }
 
 .paper-card-number {
-  font-family: 'Courier New', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -329,8 +323,7 @@ body {
   padding: 3px 10px;
   border-radius: 10px;
   margin-top: 12px;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
 }
 .card-cyan   .tag { background: rgba(0,212,255,0.12);  color: var(--accent-cyan); }
 .card-orange .tag { background: rgba(255,107,53,0.12); color: var(--accent-orange); }
@@ -372,9 +365,8 @@ body {
   margin-top: 44px;
   color: var(--text-secondary);
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  font-family: 'Courier New', monospace;
   opacity: 0.6;
 }
 
@@ -393,8 +385,7 @@ body {
    ============================================================ */
 .section-label {
   display: block;
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-cyan);
@@ -444,8 +435,7 @@ body {
 
 .viz-title {
   font-size: 0.72rem;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-secondary);
   margin-bottom: 12px;
@@ -474,9 +464,8 @@ body {
 
 .info-box h4 {
   font-size: 0.72rem;
-  font-family: 'Courier New', monospace;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   margin-bottom: 10px;
   color: var(--accent-cyan);
 }
@@ -526,8 +515,7 @@ body {
 }
 
 .slider-label {
-  font-family: 'Courier New', monospace;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
   min-width: 130px;
   flex-shrink: 0;
@@ -765,6 +753,52 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* ============================================================
+   PAPER METADATA
+   ============================================================ */
+.paper-meta {
+  margin-top: 20px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.paper-meta-row {
+  display: flex;
+  gap: 12px;
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.paper-meta-row:last-child { border-bottom: none; }
+
+.meta-key {
+  flex-shrink: 0;
+  width: 70px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding-top: 2px;
+}
+
+.meta-val {
+  color: var(--text-primary);
+  font-size: 0.85rem;
+}
+
+.meta-val a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,212,255,0.3);
+  transition: border-color 0.18s;
+}
+.meta-val a:hover { border-color: var(--accent-cyan); }
+
+/* ============================================================
    FOOTER
    ============================================================ */
 footer {
@@ -788,9 +822,8 @@ footer {
 }
 
 .qa-label {
-  font-family: 'Courier New', monospace;
   font-size: 0.68rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 700;
   margin-bottom: 8px;
@@ -859,9 +892,8 @@ footer {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent-cyan);
 }
@@ -883,7 +915,6 @@ footer {
 #qr-close:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
 
 .qr-url-text {
-  font-family: 'Courier New', monospace;
   font-size: 0.68rem;
   color: var(--text-secondary);
   margin: 14px 0 6px;

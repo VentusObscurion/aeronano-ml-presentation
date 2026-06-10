@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  const KMAX = 18;
+  const KMAX = 40;
   const xVals = Array.from({ length: KMAX }, (_, i) => i + 1);
 
   /* Smoluchowski analytical PSD at tau=0.35 (fixed snapshot) */
@@ -30,17 +30,18 @@
   }
 
   function getNoisyData() {
-    seed = 42;
+    /* seed must be set BEFORE calling this function */
     return trueY.map(v => Math.max(1e-5,
-      v + noiseLevel * (seededRand() - 0.5) * 2 * v * 2.5));
+      v + noiseLevel * (seededRand() - 0.5) * 2 * v * 3.5));
   }
 
-  /* Plain NN: overfits noise => sinusoidal artifacts */
+  /* Plain NN: overfits noise - exaggerated sinusoidal artifacts */
   function getPlainNNY() {
     return trueY.map((v, i) => {
-      const overfit = v * (1 + noiseLevel * 1.8
-        * Math.sin(i * 2.3 + 1.1)
-        * Math.sin(i * 0.7 + 0.3));
+      const overfit = v * (1 + noiseLevel * 2.6
+        * Math.sin(i * 1.9 + 0.8)
+        * Math.cos(i * 0.6 + 0.4)
+        + noiseLevel * 0.8 * Math.sin(i * 3.1));
       return Math.max(1e-6, overfit);
     });
   }
@@ -54,18 +55,18 @@
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
     margin: { t: 10, r: 16, b: 52, l: 62 },
-    font: { color: '#8888aa', family: 'Courier New, monospace', size: 11 },
+    font: { color: '#8888aa', family: 'Inter, system-ui, sans-serif', size: 11 },
     xaxis: {
       title: 'Cluster size  k',
       gridcolor: 'rgba(255,255,255,0.06)',
       tickcolor: '#555', linecolor: '#333',
-      range: [0.3, KMAX + 0.7], dtick: 2
+      range: [0.3, KMAX + 0.7], dtick: 4
     },
     yaxis: {
       title: 'N_k  (number concentration)',
       gridcolor: 'rgba(255,255,255,0.06)',
       tickcolor: '#555', linecolor: '#333',
-      range: [-0.02, 0.5]
+      range: [-0.015, 0.5]
     },
     showlegend: true,
     legend: { x: 0.52, y: 0.98,
@@ -109,12 +110,13 @@
   document.getElementById('noise-slider').addEventListener('input', function () {
     noiseLevel = parseFloat(this.value);
     document.getElementById('noise-val').textContent = noiseLevel.toFixed(1);
+    seed = 42;
     noisyData = getNoisyData();
     redraw();
   });
 
   document.getElementById('resample-btn').addEventListener('click', function () {
-    seed = Math.floor(Math.random() * 99999);
+    seed = Math.floor(Math.random() * 999999) + 1;
     noisyData = getNoisyData();
     redraw();
   });

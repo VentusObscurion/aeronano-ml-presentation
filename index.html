@@ -23,7 +23,7 @@
 
   <!-- =================== NAVIGATION =================== -->
   <nav id="navbar">
-    <div class="nav-brand">AeroNano · ML</div>
+    <div class="nav-brand">Aerosol &amp; Nanotechnology</div>
     <ul class="nav-links" id="nav-links">
       <li><a href="#intro"     class="nav-link" data-section="intro">Introduction</a></li>
       <li><a href="#paper1"    class="nav-link" data-section="paper1">Paper 1 · Continuum</a></li>
@@ -40,14 +40,9 @@
       <div class="hero-content">
         <span class="hero-badge">Master Seminar &mdash; Aerosol &amp; Nanotechnology &mdash; SS 2026</span>
         <h1 class="hero-title">
-          Bridging the Gap:<br>
           <span class="highlight-cyan">Machine Learning</span> for<br>
           <span class="highlight-orange">Aerosol Collision Kernels</span>
         </h1>
-        <p class="hero-subtitle">
-          Three papers. One fundamental gap. A new research direction at the intersection of
-          Physics-Informed Neural Networks, transition-regime theory, and molecular dynamics.
-        </p>
       </div>
 
       <!-- Bridge Diagram -->
@@ -78,37 +73,23 @@
       <!-- Paper Cards -->
       <div class="paper-cards">
         <a href="#paper1" class="paper-card card-cyan" style="text-decoration:none;">
-          <div class="paper-card-number">Paper 01 &mdash; System Level (Macro)</div>
+          <div class="paper-card-number">Paper 01 &mdash; Continuum Regime</div>
           <h3>Physics-Informed Deep Learning for Particle Aggregation &amp; Breakage</h3>
-          <p class="paper-authors">Chen, Wang, Meng, Luo (2021) &middot; Chemical Engineering Journal</p>
-          <p class="paper-summary">PINNs solve the Population Balance Equation (PBE) with the governing PDE as a physics loss function — providing a physically consistent macro-scale simulation framework.</p>
-          <span class="tag">PINN &middot; PBE &middot; Aggregation</span>
+          <p class="paper-authors">Chen et al. (2021) &middot; Chemical Engineering Journal</p>
+          <span class="tag">PINN &middot; PBE &middot; Continuum</span>
         </a>
         <a href="#paper2" class="paper-card card-orange" style="text-decoration:none;">
-          <div class="paper-card-number">Paper 02 &mdash; Theory Bridge (Meso)</div>
+          <div class="paper-card-number">Paper 02 &mdash; Transition Regime</div>
           <h3>Transition Regime Collision Kernel from Mean First Passage Times</h3>
           <p class="paper-authors">Gopalakrishnan &amp; Hogan Jr. (2011) &middot; Aerosol Science &amp; Technology</p>
-          <p class="paper-summary">Defines a dimensionless kernel $H(Kn_D)$ bridging continuum and free-molecular regimes via Langevin dynamics and MFPT theory. Uses hard-sphere assumptions.</p>
-          <span class="tag">Kn &middot; MFPT &middot; Hard-Sphere</span>
+          <span class="tag">Kn &middot; MFPT &middot; Langevin</span>
         </a>
         <a href="#paper3" class="paper-card card-green" style="text-decoration:none;">
-          <div class="paper-card-number">Paper 03 &mdash; Nano World (Micro)</div>
-          <h3>Neural Network Parametrized Collision Rate for &lt;3 nm TiO₂ Nanoclusters</h3>
-          <p class="paper-authors">Tamadate, Yang, Hogan Jr. (2022) &middot; Aerosol Science &amp; Technology</p>
-          <p class="paper-summary">MLP trained on Molecular Dynamics simulation data predicts collision rates below 3 nm where standard theory fails. A black-box, material-specific model.</p>
-          <span class="tag">MLP &middot; MD &middot; Sub-3 nm &middot; TiO₂</span>
+          <div class="paper-card-number">Paper 03 &mdash; Free-Molecular Regime</div>
+          <h3>Neural Network Collision Rate Model for &lt;3 nm TiO&#x2082; Nanoclusters</h3>
+          <p class="paper-authors">Tamadate, Yang &amp; Hogan Jr. (2022) &middot; Aerosol Science &amp; Technology</p>
+          <span class="tag">MLP &middot; MD &middot; Sub-3 nm</span>
         </a>
-      </div>
-
-      <!-- Gap Highlight -->
-      <div class="gap-highlight">
-        <div class="gap-highlight-icon">&#9889;</div>
-        <div>
-          <strong>The Research Gap:</strong> We have (1) PINN frameworks for macro-scale systems,
-          (2) transition-regime theory as a physical bridge, and (3) atomic-scale MD data for the nano-world.
-          However, <em>no model integrates MD-derived nano-physics into a physically-constrained PINN
-          framework for generalizable aerosol Population Balance Equations.</em>
-        </div>
       </div>
 
       <div class="scroll-indicator">
@@ -138,9 +119,12 @@
             <div class="qa-label qa-found">What they found</div>
             <p>The PINN predicts particle size distributions far more accurately than a plain neural network under noisy conditions. Because it <em>knows</em> the underlying physics, it cannot be fooled by measurement errors &mdash; it stays physically consistent even with bad data.</p>
           </div>
-          <div class="info-box orange">
-            <h4>&#9888; The Limit</h4>
-            <p>The collision rate in the PBE is assumed to be a simple analytical formula. There is <strong>no mechanism to plug in atomic-scale data</strong> from the nano-world &mdash; making the model blind to what actually happens below 3&nbsp;nm.</p>
+          <div class="paper-meta">
+            <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">Physics-informed deep learning for modelling particle aggregation and breakage processes</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Authors</span><span class="meta-val">X. Chen, L. G. Wang, F. Meng, Z.-H. Luo</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Year</span><span class="meta-val">2021</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Journal</span><span class="meta-val">Chemical Engineering Journal, 426, 131220</span></div>
+            <div class="paper-meta-row"><span class="meta-key">DOI</span><span class="meta-val"><a href="https://doi.org/10.1016/j.cej.2021.131220" target="_blank" rel="noopener">10.1016/j.cej.2021.131220</a></span></div>
           </div>
         </div>
         <div class="content-viz">
@@ -206,9 +190,12 @@
             <div class="qa-label qa-found">What they found</div>
             <p>All these random collision times collapse onto a single, <strong>universal dimensionless curve H(Kn)</strong> &mdash; valid from the purely diffusive continuum regime all the way to the ballistic free-molecular regime. One curve to rule them all.</p>
           </div>
-          <div class="info-box orange">
-            <h4>&#9888; The Limit</h4>
-            <p>The model treats particles as <strong>rigid hard spheres</strong> in a featureless gas. It completely ignores van der Waals attraction, electric charges, and atomic structure &mdash; effects that dominate below 3&nbsp;nm.</p>
+          <div class="paper-meta">
+            <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">Determination of the Transition Regime Collision Kernel from Mean First Passage Times</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Authors</span><span class="meta-val">R. Gopalakrishnan, C. J. Hogan Jr.</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Year</span><span class="meta-val">2011</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Journal</span><span class="meta-val">Aerosol Science and Technology, 45, 1499&ndash;1509</span></div>
+            <div class="paper-meta-row"><span class="meta-key">DOI</span><span class="meta-val"><a href="https://doi.org/10.1080/02786826.2011.601775" target="_blank" rel="noopener">10.1080/02786826.2011.601775</a></span></div>
           </div>
         </div>
       </div>
@@ -235,9 +222,12 @@
             <div class="qa-label qa-found">What they found</div>
             <p>The neural network predicts collision outcomes with <strong>&gt;95% accuracy</strong>. It captures subtle effects like <em>dipole&ndash;dipole attraction</em> that classical models ignore &mdash; leading to an effectively larger capture cross-section than pure geometry would predict.</p>
           </div>
-          <div class="info-box orange">
-            <h4>&#9888; The Limit</h4>
-            <p>The model is a <strong>black box</strong> trained only on TiO&#x2082; data. No physical constraints, no generalizability to other materials &mdash; it cannot be embedded into a PBE without additional physics-informed regularization.</p>
+          <div class="paper-meta">
+            <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">A Neural Network Parametrized Collision Rate Model for &lt;3 nm TiO&#x2082; Nanoclusters</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Authors</span><span class="meta-val">T. Tamadate, S. Yang, C. J. Hogan Jr.</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Year</span><span class="meta-val">2022</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Journal</span><span class="meta-val">Aerosol Science and Technology, 56, 915&ndash;929</span></div>
+            <div class="paper-meta-row"><span class="meta-key">DOI</span><span class="meta-val"><a href="https://doi.org/10.1080/02786826.2022.2080052" target="_blank" rel="noopener">10.1080/02786826.2022.2080052</a></span></div>
           </div>
         </div>
         <div class="content-viz">
@@ -255,18 +245,18 @@
             </div>
           </div>
           <div style="margin-top:10px;">
-            <div style="font-size:0.72rem; font-family:'Courier New',monospace; color:var(--text-secondary); margin-bottom:5px; letter-spacing:0.08em;">STICK PROBABILITY</div>
+            <div style="font-size:0.72rem; color:var(--text-secondary); margin-bottom:5px; letter-spacing:0.05em;">STICK PROBABILITY</div>
             <div style="background:rgba(255,255,255,0.06); border-radius:4px; height:8px; overflow:hidden;">
               <div id="stick-prob-bar" style="height:100%; width:72%; background:linear-gradient(90deg,var(--accent-cyan),var(--accent-green)); border-radius:4px; transition:width 0.3s;"></div>
             </div>
-            <div style="font-family:'Courier New',monospace; font-size:0.78rem; color:var(--accent-cyan); margin-top:4px;" id="stick-prob-val">72%</div>
+            <div style="font-size:0.78rem; color:var(--accent-cyan); margin-top:4px;" id="stick-prob-val">72%</div>
           </div>
           <div style="margin-top:14px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
             <button class="btn btn-primary" id="launch-btn" style="flex-shrink:0;">&#9654; Launch</button>
             <div style="flex:1; min-width:150px; background:rgba(0,0,0,0.3); border:1px solid rgba(0,212,255,0.2); border-radius:8px; padding:10px 14px;">
-              <div style="font-size:0.65rem; font-family:'Courier New',monospace; color:var(--text-secondary); letter-spacing:0.14em; margin-bottom:4px;">NN PREDICTION</div>
-              <div id="nn-outcome" style="font-size:1.1rem; font-weight:700; font-family:'Courier New',monospace; color:#8888aa;">&mdash; ready &mdash;</div>
-              <div id="nn-confidence" style="font-size:0.75rem; font-family:'Courier New',monospace; color:var(--text-secondary);"></div>
+              <div style="font-size:0.65rem; color:var(--text-secondary); letter-spacing:0.1em; margin-bottom:4px;">NN PREDICTION</div>
+              <div id="nn-outcome" style="font-size:1.1rem; font-weight:700; color:#8888aa;">&mdash; ready &mdash;</div>
+              <div id="nn-confidence" style="font-size:0.75rem; color:var(--text-secondary);"></div>
             </div>
           </div>
         </div>
@@ -348,9 +338,10 @@
       <!-- Research Question Box -->
       <div class="research-question">
         <p>
-          &ldquo;How can Physics-Informed Neural Networks (PINNs) for Population Balance Equations
-          be extended to <em>incorporate atomic-scale collision data from MD simulations</em> in the
-          transition regime, while maintaining <em>physical generalizability across materials</em>?&rdquo;
+          &ldquo;How can a cross-scale, AI-driven simulation framework be developed that integrates
+          precise microscopic collision data (from MD and Langevin simulations) as physical boundary
+          conditions (via PINNs) into macroscopic population balance models &mdash; enabling a unified,
+          <em>real-time prediction of aerosol dynamics across all three regimes</em>?&rdquo;
         </p>
       </div>
 
