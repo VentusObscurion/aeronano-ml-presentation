@@ -26,7 +26,7 @@
     <div class="nav-brand">AeroNano · ML</div>
     <ul class="nav-links" id="nav-links">
       <li><a href="#intro"     class="nav-link" data-section="intro">Introduction</a></li>
-      <li><a href="#paper1"    class="nav-link" data-section="paper1">Paper 1 · PBE</a></li>
+      <li><a href="#paper1"    class="nav-link" data-section="paper1">Paper 1 · Continuum</a></li>
       <li><a href="#paper2"    class="nav-link" data-section="paper2">Paper 2 · Transition</a></li>
       <li><a href="#paper3"    class="nav-link" data-section="paper3">Paper 3 · Nano</a></li>
       <li><a href="#synthesis" class="nav-link" data-section="synthesis">Synthesis</a></li>
@@ -118,242 +118,194 @@
     </div>
   </section>
 
-  <!-- ===================== SECTION 2: PAPER 1 — PBE + PINNs ===================== -->
+﻿  <!-- ===================== SECTION 2: PAPER 1 ===================== -->
   <section id="paper1" class="section">
     <div class="container">
-      <span class="section-label">Paper 01 &mdash; Chen, Wang, Meng &amp; Luo (2021)</span>
-      <h2 class="section-title">Population Balance Equations<br>Meet Physics-Informed Neural Networks</h2>
+      <span class="section-label">Paper 01 &mdash; Chen, Wang, Meng &amp; Luo (2021) &middot; Chemical Engineering Journal</span>
+      <h2 class="section-title">The Continuum Regime:<br>Physics-Informed Neural Networks for Particle Populations</h2>
 
       <div class="content-grid">
-        <!-- Text Left -->
         <div class="content-text">
-          <p class="section-desc">
-            The <strong>Population Balance Equation (PBE)</strong> describes how a particle size
-            distribution $n(v, t)$ evolves over time due to aggregation (coalescence) and breakage.
-            Traditional numerical solvers (finite volume, method of moments) are expensive and struggle
-            with complex, data-driven collision kernels. Chen et al. solve this by embedding the PBE
-            as a <em>physics loss</em> inside a neural network.
-          </p>
-
-          <div class="eq-block">
-            $$\frac{\partial n(v,t)}{\partial t} =
-            \frac{1}{2}\!\int_0^v \!\beta(v'\!,v\!-\!v')\,n(v')\,n(v\!-\!v')\,dv'
-            - \int_0^\infty \!\beta(v,v')\,n(v)\,n(v')\,dv'$$
+          <div class="qa-block">
+            <div class="qa-label qa-q">Research Question</div>
+            <p>How can we simulate how particles <strong>clump together</strong> and <strong>break apart</strong> in industrial processes &mdash; efficiently and accurately &mdash; even when measurement data is <em>noisy and incomplete</em>?</p>
           </div>
-
-          <div class="info-box">
-            <h4>How PINNs solve the PBE</h4>
-            <ul>
-              <li>The NN approximates $n(v, t;\,\theta)$ — the full particle size distribution</li>
-              <li>Physics loss: $\mathcal{L}_\text{PDE} = \left\|\partial_t n - \mathcal{C}[n;\,\beta]\right\|^2$</li>
-              <li>Data loss: $\mathcal{L}_\text{data} = \left\|n - n_\text{meas}\right\|^2$</li>
-              <li>Total: $\mathcal{L} = \mathcal{L}_\text{PDE} + \lambda\,\mathcal{L}_\text{data}$</li>
-              <li>Automatic differentiation computes $\partial_t n$ exactly from the network</li>
-            </ul>
+          <div class="qa-block">
+            <div class="qa-label qa-did">What they did</div>
+            <p>They built a <strong>Physics-Informed Neural Network (PINN)</strong>. Instead of letting the AI learn freely, they hardwired the <em>Population Balance Equation (PBE)</em> &mdash; the conservation law for particle populations &mdash; directly into the network&rsquo;s loss function as a non-negotiable constraint.</p>
           </div>
-
+          <div class="qa-block">
+            <div class="qa-label qa-found">What they found</div>
+            <p>The PINN predicts particle size distributions far more accurately than a plain neural network under noisy conditions. Because it <em>knows</em> the underlying physics, it cannot be fooled by measurement errors &mdash; it stays physically consistent even with bad data.</p>
+          </div>
           <div class="info-box orange">
-            <h4>&#9888; The Gap in Paper 1</h4>
-            <p>
-              The collision kernel $\beta$ is assumed to be a simplified, <strong>analytical function</strong>
-              (constant or purely Brownian/continuum). The PINN framework has no mechanism to
-              incorporate atomic-scale collision data from MD simulations, making it blind to
-              the true physics below 3 nm.
-            </p>
+            <h4>&#9888; The Limit</h4>
+            <p>The collision rate in the PBE is assumed to be a simple analytical formula. There is <strong>no mechanism to plug in atomic-scale data</strong> from the nano-world &mdash; making the model blind to what actually happens below 3&nbsp;nm.</p>
           </div>
         </div>
-
-        <!-- Visualization Right -->
         <div class="content-viz">
-          <div class="viz-title">Interactive 01 &mdash; Particle Size Distribution (Smoluchowski PBE, $K_{ij} = 1$)</div>
-          <div id="pbe-plot" style="width:100%; height:300px;"></div>
-          <div class="slider-group">
+          <div class="viz-title">Interactive &mdash; PINN vs. Plain Neural Network with Noisy Data</div>
+          <div id="pinn-compare-plot" style="width:100%; height:280px;"></div>
+          <div class="slider-group" style="margin-top:10px;">
             <div class="slider-row">
-              <span class="slider-label">Time: <span id="pbe-time-val">t = 0.00</span></span>
-              <input type="range" id="pbe-slider" min="0" max="99" value="0" step="1">
+              <span class="slider-label">Noise level: <span id="noise-val">0.4</span></span>
+              <input type="range" id="noise-slider" min="0.05" max="1.2" value="0.4" step="0.05" style="touch-action:none;">
             </div>
           </div>
-          <div style="display:flex; gap:10px; margin-top:12px;">
-            <button class="btn btn-primary" id="pbe-play">&#9654; Play</button>
-            <button class="btn btn-ghost"    id="pbe-reset">&#8635; Reset</button>
+          <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="toggle-pinn" style="background:var(--accent-cyan); color:#000; border:none;">&#11044; PINN</button>
+            <button class="btn btn-primary" id="toggle-nn"   style="background:var(--accent-orange); color:#fff; border:none;">&#11044; Plain NN</button>
+            <button class="btn btn-ghost"   id="resample-btn">&#8635; New Sample</button>
           </div>
-          <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:12px; line-height:1.6;">
-            Constant kernel $K_{ij} = 1$. Initial condition: monodisperse monomers $N_1(0)=1$.
-            The distribution broadens and shifts to larger cluster sizes $k$ over time as aggregation proceeds.
-            Analytical solution: $N_k(t) = \tau^{k-1}\!/(1+\tau)^{k+1}$, $\tau = t/2$.
+          <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:10px; line-height:1.6;">
+            The <span style="color:var(--accent-orange); font-weight:600;">Plain NN</span> chases the noise and overfits.
+            The <span style="color:var(--accent-cyan); font-weight:600;">PINN</span> ignores noise &mdash;
+            it knows particles cannot spontaneously appear or disappear.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== SECTION 3: PAPER 2 — Transition Regime ===================== -->
+  <!-- ===================== SECTION 3: PAPER 2 ===================== -->
   <section id="paper2" class="section">
     <div class="container">
-      <span class="section-label">Paper 02 &mdash; Gopalakrishnan &amp; Hogan Jr. (2011)</span>
-      <h2 class="section-title">The Theory Bridge:<br>Transition Regime Collision Kernel</h2>
+      <span class="section-label">Paper 02 &mdash; Gopalakrishnan &amp; Hogan Jr. (2011) &middot; Aerosol Science &amp; Technology</span>
+      <h2 class="section-title">The Transition Regime:<br>A Random Walk Bridges Two Worlds</h2>
 
       <div class="content-grid reverse">
-        <!-- Visualization Left -->
         <div class="content-viz">
-          <div class="viz-title">Interactive 02 &mdash; Dimensionless Kernel $H(Kn_D)$ — Dahneke Interpolation</div>
-          <div id="regime-plot" style="width:100%; height:320px;"></div>
+          <div class="viz-title">Interactive &mdash; The Drunkard&rsquo;s Walk &amp; Mean First Passage Time</div>
+          <canvas id="walk-canvas" width="540" height="220"
+                  style="width:100%; border-radius:8px; background:#050510; display:block; touch-action:manipulation;"></canvas>
           <div class="slider-group" style="margin-top:12px;">
             <div class="slider-row">
-              <span class="slider-label">$\log_{10}(Kn_D)$: <span id="regime-kn-display">Kn<sub>D</sub> = 1.00</span></span>
-              <input type="range" id="regime-slider" min="-3" max="3" value="0" step="0.05">
+              <span class="slider-label">Knudsen&nbsp;Kn: <span id="kn-display">1.00</span></span>
+              <input type="range" id="kn-slider" min="-2" max="2" value="0" step="0.05" style="touch-action:none;">
             </div>
           </div>
-          <div class="regime-readout" id="regime-readout">
-            $H(1.00) = 1.285$ &nbsp;&middot;&nbsp; Regime: <span id="regime-label" class="regime-tag transition-tag">Transition</span>
+          <div style="margin-top:10px;">
+            <button class="btn btn-ghost" id="walk-reset">&#8635; Reset</button>
           </div>
-        </div>
-
-        <!-- Text Right -->
-        <div class="content-text">
-          <p class="section-desc">
-            The <strong>diffusive Knudsen number</strong>
-            $Kn_D = \bar{c}_\text{rel}\,r_c\,/\,(4\,D_{12})$
-            quantifies whether a collision is governed by diffusion (small $Kn_D$, large particles)
-            or ballistic motion (large $Kn_D$, nanoclusters). Using Mean First Passage Time theory
-            and Langevin dynamics, Gopalakrishnan &amp; Hogan derive a dimensionless correction
-            factor $H$ that captures the full transition.
+          <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:10px; line-height:1.6;">
+            <span style="color:var(--accent-cyan); font-weight:600;">Low Kn</span>: many tiny chaotic steps &mdash; diffusion (continuum).
+            <span style="color:var(--accent-orange); font-weight:600;">High Kn</span>: fewer large steps &mdash; ballistic (free-molecular).
+            The average collision count illustrates the <em>Mean First Passage Time</em>.
           </p>
-
-          <div class="eq-block">
-            $$\beta = 4\pi\,D_{12}\,r_c \cdot H(Kn_D)$$
+        </div>
+        <div class="content-text">
+          <div class="qa-block">
+            <div class="qa-label qa-q">Research Question</div>
+            <p>How do you calculate collision rates in the <strong>&ldquo;in-between&rdquo; zone</strong> &mdash; the transition regime &mdash; where neither pure fluid mechanics nor pure molecular kinetics alone applies?</p>
           </div>
-
-          <div class="eq-block" style="border-left-color: var(--accent-orange);">
-            $$H(Kn_D) = \frac{1}{1 + Kn_D} + \frac{\pi}{4}\,Kn_D$$
+          <div class="qa-block">
+            <div class="qa-label qa-did">What they did</div>
+            <p>They used <strong>Langevin Dynamics</strong> &mdash; a simulated random walk where the particle is buffeted by gas molecules. They measured how long a particle takes to stumble into a target purely by chance, repeating this thousands of times: the <em>Mean First Passage Time (MFPT)</em>.</p>
           </div>
-
-          <div class="info-box">
-            <h4>Regime Limits</h4>
-            <ul>
-              <li><strong>Continuum</strong> ($Kn_D \to 0$): $H \to 1$ — purely diffusion-controlled (Smoluchowski)</li>
-              <li><strong>Transition</strong> ($0.1 \lesssim Kn_D \lesssim 10$): Both mechanisms compete, $H$ has a shallow minimum then rises</li>
-              <li><strong>Free-Molecular</strong> ($Kn_D \to \infty$): $H \sim \tfrac{\pi}{4}\,Kn_D$ — ballistic, geometric cross-section dominates</li>
-            </ul>
+          <div class="qa-block">
+            <div class="qa-label qa-found">What they found</div>
+            <p>All these random collision times collapse onto a single, <strong>universal dimensionless curve H(Kn)</strong> &mdash; valid from the purely diffusive continuum regime all the way to the ballistic free-molecular regime. One curve to rule them all.</p>
           </div>
-
           <div class="info-box orange">
-            <h4>&#9888; The Gap in Paper 2</h4>
-            <p>
-              The model assumes <strong>hard-sphere particles</strong> in a structureless background gas.
-              It ignores van der Waals forces, electrostatic charge interactions, and structural
-              rearrangements of real nanoclusters. Below 3 nm, these effects become dominant
-              and the $H(Kn_D)$ curve deviates significantly from MD-derived values.
-            </p>
+            <h4>&#9888; The Limit</h4>
+            <p>The model treats particles as <strong>rigid hard spheres</strong> in a featureless gas. It completely ignores van der Waals attraction, electric charges, and atomic structure &mdash; effects that dominate below 3&nbsp;nm.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== SECTION 4: PAPER 3 — MD + MLP ===================== -->
+  <!-- ===================== SECTION 4: PAPER 3 ===================== -->
   <section id="paper3" class="section">
     <div class="container">
-      <span class="section-label">Paper 03 &mdash; Tamadate, Yang &amp; Hogan Jr. (2022)</span>
-      <h2 class="section-title">The Nano World:<br>MD-Informed Neural Network for Sub-3 nm Clusters</h2>
+      <span class="section-label">Paper 03 &mdash; Tamadate, Yang &amp; Hogan Jr. (2022) &middot; Aerosol Science &amp; Technology</span>
+      <h2 class="section-title">The Free-Molecular Regime:<br>A Neural Network Trained on Atomic Collisions</h2>
 
       <div class="content-grid">
-        <!-- Text Left -->
         <div class="content-text">
-          <p class="section-desc">
-            Below 3 nm, particles are small enough that individual atomic interactions dominate the
-            collision dynamics. Molecular Dynamics (MD) simulations integrate Newton's equations for
-            every atom, capturing van der Waals forces, atomic structure, and kinetic energy exchange —
-            but at enormous computational cost. Tamadate et al. train an MLP on thousands of
-            MD collision trajectories to create a fast surrogate model.
-          </p>
-
-          <div class="info-box green">
-            <h4>MD Simulation Variables</h4>
-            <ul>
-              <li><strong>Impact parameter $b$</strong>: perpendicular offset of the approach trajectory</li>
-              <li><strong>Relative velocity $v_\text{rel}$</strong>: initial kinetic energy of the cluster pair</li>
-              <li><strong>Cluster charges $q_1, q_2$</strong>: electrostatic contributions to trajectory</li>
-              <li><strong>Temperature $T$</strong>: thermal energy affecting sticking probability</li>
-              <li><strong>Outcome</strong>: collision probability $P_c(b, v)$ — stick, bounce, or reactive</li>
-            </ul>
+          <div class="qa-block">
+            <div class="qa-label qa-q">Research Question</div>
+            <p>How can we accurately predict collision rates for ultra-small <strong>&lt;3&nbsp;nm TiO&#x2082; nanoparticles</strong>, where rigid-sphere models fail because atomic-scale forces like <em>dipole interactions</em> completely dominate?</p>
           </div>
-
-          <div class="eq-block" style="border-left-color: var(--accent-green);">
-            $$\beta_\text{MD} = 2\pi \int_0^\infty\!\!\int_0^\infty P_c(b,v)\;b\;f(v)\;v\;db\;dv$$
+          <div class="qa-block">
+            <div class="qa-label qa-did">What they did</div>
+            <p>They ran thousands of <strong>Molecular Dynamics (MD) simulations</strong> &mdash; watching TiO&#x2082; clusters collide atom-by-atom at different speeds and impact angles. They then trained a <em>Multi-Layer Perceptron (MLP)</em> on the results to predict: will they stick or bounce?</p>
           </div>
-
+          <div class="qa-block">
+            <div class="qa-label qa-found">What they found</div>
+            <p>The neural network predicts collision outcomes with <strong>&gt;95% accuracy</strong>. It captures subtle effects like <em>dipole&ndash;dipole attraction</em> that classical models ignore &mdash; leading to an effectively larger capture cross-section than pure geometry would predict.</p>
+          </div>
           <div class="info-box orange">
-            <h4>&#9888; The Gap in Paper 3</h4>
-            <p>
-              The MLP is a <strong>black-box</strong> model. It has no physics constraints
-              (not a PINN), is strictly limited to TiO₂ clusters, and provides no generalizability
-              to other materials, size ranges, or temperature conditions not covered by the MD training data.
-              It cannot be embedded into a PBE without additional physics-informed regularization.
-            </p>
+            <h4>&#9888; The Limit</h4>
+            <p>The model is a <strong>black box</strong> trained only on TiO&#x2082; data. No physical constraints, no generalizability to other materials &mdash; it cannot be embedded into a PBE without additional physics-informed regularization.</p>
           </div>
         </div>
-
-        <!-- 2D Collision Canvas Right -->
         <div class="content-viz">
-          <div class="viz-title">Interactive 03a &mdash; 2D Cluster Collision: Impact Parameter $b$</div>
-          <canvas id="collision-canvas" width="540" height="220"
-                  style="width:100%; border-radius:8px; background:#050510; display:block;"></canvas>
+          <div class="viz-title">Interactive &mdash; Neural Network Collision Predictor</div>
+          <canvas id="pinball-canvas" width="540" height="220"
+                  style="width:100%; border-radius:8px; background:#050510; display:block; touch-action:manipulation;"></canvas>
           <div class="slider-group" style="margin-top:12px;">
             <div class="slider-row">
-              <span class="slider-label">$b$: <span id="b-val">0.0</span> R</span>
-              <input type="range" id="b-slider" min="0" max="3.5" value="0" step="0.05">
+              <span class="slider-label">Impact angle: <span id="angle-val">20&deg;</span></span>
+              <input type="range" id="angle-slider" min="0" max="85" value="20" step="1" style="touch-action:none;">
             </div>
             <div class="slider-row">
-              <span class="slider-label">Speed $v$: <span id="v-val">2.0</span></span>
-              <input type="range" id="v-slider" min="0.5" max="5" value="2" step="0.1">
+              <span class="slider-label">Temperature: <span id="temp-val">1.0</span></span>
+              <input type="range" id="temp-slider" min="0.1" max="4.0" value="1.0" step="0.1" style="touch-action:none;">
             </div>
           </div>
-          <div class="viz-status" id="collision-status">&mdash;</div>
-          <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:8px; line-height:1.5;">
-            Collision iff $b \leq R_1 + R_2 = 2R$. In reality, van der Waals attraction
-            captures trajectories with $b > 2R$ — a key deviation from the hard-sphere model.
-          </p>
-        </div>
-      </div>
-
-      <!-- 3D Collision — Full Width Row -->
-      <div class="full-width-section" style="margin-top:70px;">
-        <span class="section-label">Interactive 03b &mdash; 3D Nanocluster Collision (Three.js)</span>
-        <div class="content-grid" style="margin-top:20px; align-items:center;">
-          <!-- 3D Canvas -->
-          <div id="canvas3d-container">
-            <canvas id="canvas3d"></canvas>
-          </div>
-          <!-- Controls + Text -->
-          <div style="display:flex; flex-direction:column; gap:20px;">
-            <p style="color:var(--text-secondary); font-size:0.9rem; line-height:1.8;">
-              Two TiO₂ nanoclusters approach each other. Adjust the impact parameter $b$
-              to see how the perpendicular offset affects whether a collision occurs.
-              In the sub-3 nm regime, van der Waals forces bend trajectories, making the
-              <em>effective</em> collision cross-section larger than the geometric one.
-            </p>
-            <div class="slider-group">
-              <div class="slider-row">
-                <span class="slider-label">Impact $b$: <span id="b3d-val">0.0</span> R</span>
-                <input type="range" id="b3d-slider" min="0" max="4" value="0" step="0.1">
-              </div>
-              <div class="slider-row">
-                <span class="slider-label">Speed: <span id="v3d-val">1.0</span></span>
-                <input type="range" id="v3d-slider" min="0.2" max="3" value="1" step="0.1">
-              </div>
+          <div style="margin-top:10px;">
+            <div style="font-size:0.72rem; font-family:'Courier New',monospace; color:var(--text-secondary); margin-bottom:5px; letter-spacing:0.08em;">STICK PROBABILITY</div>
+            <div style="background:rgba(255,255,255,0.06); border-radius:4px; height:8px; overflow:hidden;">
+              <div id="stick-prob-bar" style="height:100%; width:72%; background:linear-gradient(90deg,var(--accent-cyan),var(--accent-green)); border-radius:4px; transition:width 0.3s;"></div>
             </div>
-            <div class="info-box green" style="margin:0;">
-              <h4>Why 3D matters</h4>
-              <p>Real nanoclusters are not perfect spheres. Their faceted atomic structure
-              and non-uniform charge distribution create anisotropic collision cross-sections
-              that cannot be captured by a single scalar impact parameter $b$.</p>
+            <div style="font-family:'Courier New',monospace; font-size:0.78rem; color:var(--accent-cyan); margin-top:4px;" id="stick-prob-val">72%</div>
+          </div>
+          <div style="margin-top:14px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="launch-btn" style="flex-shrink:0;">&#9654; Launch</button>
+            <div style="flex:1; min-width:150px; background:rgba(0,0,0,0.3); border:1px solid rgba(0,212,255,0.2); border-radius:8px; padding:10px 14px;">
+              <div style="font-size:0.65rem; font-family:'Courier New',monospace; color:var(--text-secondary); letter-spacing:0.14em; margin-bottom:4px;">NN PREDICTION</div>
+              <div id="nn-outcome" style="font-size:1.1rem; font-weight:700; font-family:'Courier New',monospace; color:#8888aa;">&mdash; ready &mdash;</div>
+              <div id="nn-confidence" style="font-size:0.75rem; font-family:'Courier New',monospace; color:var(--text-secondary);"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+
+  <!-- QR Code FAB -->
+  <button id="qr-fab" aria-label="Share via QR Code" title="Share this page">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+      <rect x="5" y="5" width="3" height="3" fill="currentColor" stroke="none"></rect>
+      <rect x="16" y="5" width="3" height="3" fill="currentColor" stroke="none"></rect>
+      <rect x="5" y="16" width="3" height="3" fill="currentColor" stroke="none"></rect>
+      <line x1="14" y1="14" x2="17" y2="14"></line>
+      <line x1="17" y1="14" x2="17" y2="17"></line>
+      <line x1="14" y1="17" x2="14" y2="21"></line>
+      <line x1="17" y1="17" x2="21" y2="17"></line>
+      <line x1="21" y1="17" x2="21" y2="21"></line>
+      <line x1="17" y1="21" x2="21" y2="21"></line>
+    </svg>
+  </button>
+
+  <!-- QR Modal -->
+  <div id="qr-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.78); z-index:3000; align-items:center; justify-content:center; padding:20px;">
+    <div class="qr-modal-inner">
+      <div class="qr-modal-header">
+        <span>Scan to open on your phone</span>
+        <button id="qr-close">&#10005;</button>
+      </div>
+      <div id="qr-code-div" style="background:#fff; padding:14px; border-radius:10px; display:inline-block;"></div>
+      <p id="qr-url-text" class="qr-url-text"></p>
+      <p class="qr-hint">Share this URL &mdash; let your audience interact live</p>
+    </div>
+  </div>
+
 
   <!-- ===================== SECTION 5: SYNTHESIS ===================== -->
   <section id="synthesis" class="section">
@@ -446,16 +398,16 @@
 
   <!-- =================== CDN LIBRARIES =================== -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/3.1.1/plotly.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- =================== APP SCRIPTS =================== -->
   <script src="js/navigation.js"></script>
   <script src="js/pbe_simulation.js"></script>
   <script src="js/regime_slider.js"></script>
   <script src="js/collision_2d.js"></script>
-  <script src="js/collision_3d.js"></script>
   <script src="js/pinn_diagram.js"></script>
+  <script src="js/qrcode_init.js"></script>
 
 </body>
 </html>

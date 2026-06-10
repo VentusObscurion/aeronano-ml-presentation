@@ -394,8 +394,8 @@ body {
 .section-label {
   display: block;
   font-family: 'Courier New', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-cyan);
   margin-bottom: 10px;
@@ -777,6 +777,127 @@ footer {
 }
 
 /* ============================================================
+   Q&A BLOCKS
+   ============================================================ */
+.qa-block {
+  margin: 0 0 20px;
+  padding: 16px 18px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.qa-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.qa-q     { background: rgba(0,212,255,0.1);  color: var(--accent-cyan); }
+.qa-did   { background: rgba(255,210,0,0.1);  color: #ffd700; }
+.qa-found { background: rgba(0,255,136,0.1);  color: var(--accent-green); }
+
+.qa-block p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.qa-block strong { color: var(--text-primary); }
+.qa-block em     { color: var(--accent-cyan); font-style: normal; }
+
+/* ============================================================
+   QR FAB
+   ============================================================ */
+#qr-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1500;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  color: var(--bg-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,212,255,0.45);
+  transition: all 0.22s ease;
+}
+
+#qr-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(0,212,255,0.65);
+}
+
+/* ============================================================
+   QR MODAL
+   ============================================================ */
+.qr-modal-inner {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.qr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+#qr-close {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text-secondary);
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+}
+#qr-close:hover { border-color: var(--accent-orange); color: var(--accent-orange); }
+
+.qr-url-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  margin: 14px 0 6px;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.qr-hint {
+  font-size: 0.75rem;
+  color: rgba(136,136,170,0.6);
+  margin-top: 6px;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 960px) {
@@ -803,6 +924,7 @@ footer {
   .bridge-right { border-left:  none; border-top:    1px solid var(--border-subtle); }
   .bridge-center { flex-direction: row; padding: 16px; }
   .bridge-arrow-line { flex: 1; width: auto; height: 1px; }
+  #qr-fab { bottom: 20px; right: 20px; width: 46px; height: 46px; }
 }
 
 @media (max-width: 600px) {
@@ -811,4 +933,8 @@ footer {
   [style*="grid-template-columns:repeat(3"] {
     grid-template-columns: 1fr !important;
   }
+  input[type="range"] { min-height: 36px; }
+  .btn { min-height: 40px; padding: 10px 18px; }
+  .section-title { font-size: 1.5rem; }
+  .hero-title    { font-size: 1.75rem; }
 }
