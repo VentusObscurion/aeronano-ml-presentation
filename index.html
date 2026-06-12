@@ -381,45 +381,74 @@
         </tbody>
       </table>
 
+      <p style="color:var(--text-secondary); font-size:0.92rem; margin:24px 0 0; max-width:720px; line-height:1.75;">
+        Each paper provides a valid collision kernel for its own regime &mdash; but none connects all three.
+        Studying them together, a natural question emerges:
+      </p>
+
       <!-- Research Question Box -->
       <div class="research-question">
         <p>
-          &ldquo;How can a cross-scale, AI-driven simulation framework be developed that integrates
-          precise microscopic collision data (from MD and Langevin simulations) as physical boundary
-          conditions (via PINNs) into macroscopic population balance models &mdash; enabling a unified,
-          <em>real-time prediction of aerosol dynamics across all three regimes</em>?&rdquo;
+          &ldquo;If continuum, transition, and free-molecular regime each require their own collision kernel model &mdash;
+          can these regime-specific approaches be <em>unified into one consistent description of&nbsp;$\beta$</em>
+          across all particle sizes and Knudsen numbers?&rdquo;
         </p>
       </div>
 
-      <!-- PINN Architecture Diagram -->
+      <!-- Unification Concept Diagram -->
       <div style="margin-top:48px;">
-        <span class="section-label">Interactive 05 &mdash; Proposed PINN Architecture</span>
-        <p style="color:var(--text-secondary); font-size:0.9rem; margin:10px 0 20px; max-width:700px; line-height:1.7;">
-          A neural network learns the collision kernel $\beta(Kn_D, q_1, q_2, T)$ subject to two
-          simultaneous constraints: physical consistency with the PBE, and fidelity to MD simulation data.
+        <span class="section-label">One Possible Direction</span>
+        <p style="color:var(--text-secondary); font-size:0.9rem; margin:10px 0 24px; max-width:700px; line-height:1.7;">
+          Each paper contributes one piece. Combined, they could form a single collision kernel
+          $\beta(Kn_D, q_1, q_2, T)$ that spans all three regimes:
         </p>
-        <div class="content-viz" style="min-height:460px; padding:20px;">
-          <svg id="pinn-svg" width="100%" height="440" viewBox="0 0 760 440"
-               preserveAspectRatio="xMidYMid meet"></svg>
-        </div>
-      </div>
 
-      <!-- Roadmap Steps -->
-      <div style="margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
-        <div class="info-box" style="margin:0;">
-          <h4>Step 1 &mdash; Expand MD Data</h4>
-          <p>Run MD simulations for diverse cluster materials (SiO₂, Fe₂O₃, C) and charge states
-          to generate a rich $(b, v, T, q_1, q_2) \to \beta_\text{MD}$ training set beyond TiO₂.</p>
-        </div>
-        <div class="info-box orange" style="margin:0;">
-          <h4>Step 2 &mdash; Physics-Constrained Learning</h4>
-          <p>Train a PINN where the neural network predicts $\beta(Kn_D)$ with soft physics constraints:
-          $H \to 1$ as $Kn_D \to 0$ and $H \sim \tfrac{\pi}{4}\,Kn_D$ as $Kn_D \to \infty$.</p>
-        </div>
-        <div class="info-box green" style="margin:0;">
-          <h4>Step 3 &mdash; Embed in PBE Solver</h4>
-          <p>Use $\beta_\text{NN}(Kn_D, q, T)$ as the collision kernel in the Population Balance
-          Equation — enabling physically consistent, data-driven aerosol simulation from nano to macro scale.</p>
+        <div class="unify-diagram">
+          <div class="unify-sources">
+            <div class="unify-source unify-cyan">
+              <span class="unify-paper">Paper 1 &middot; Chen et al.</span>
+              <span class="unify-regime">Continuum</span>
+              <span class="unify-kn">$Kn \to 0$</span>
+              <span class="unify-role">PBE framework + diffusion limit</span>
+            </div>
+            <div class="unify-source unify-orange">
+              <span class="unify-paper">Paper 2 &middot; Gopalakrishnan</span>
+              <span class="unify-regime">Transition</span>
+              <span class="unify-kn">$0.1 &lt; Kn_D &lt; 10$</span>
+              <span class="unify-role">$H(Kn_D)$ connects both extremes</span>
+            </div>
+            <div class="unify-source unify-green">
+              <span class="unify-paper">Paper 3 &middot; Tamadate et al.</span>
+              <span class="unify-regime">Free-Molecular</span>
+              <span class="unify-kn">$Kn \to \infty$</span>
+              <span class="unify-role">MD data for realistic cluster collisions</span>
+            </div>
+          </div>
+
+          <svg class="unify-arrows" viewBox="0 0 720 56" aria-hidden="true">
+            <defs>
+              <marker id="unify-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="rgba(255,255,255,0.35)"/>
+              </marker>
+            </defs>
+            <line x1="120" y1="4" x2="360" y2="50" stroke="rgba(0,212,255,0.45)" stroke-width="1.5" marker-end="url(#unify-arrow)"/>
+            <line x1="360" y1="4" x2="360" y2="50" stroke="rgba(255,107,53,0.55)" stroke-width="1.5" marker-end="url(#unify-arrow)"/>
+            <line x1="600" y1="4" x2="360" y2="50" stroke="rgba(0,255,136,0.45)" stroke-width="1.5" marker-end="url(#unify-arrow)"/>
+          </svg>
+
+          <div class="unify-hub">
+            <span class="unify-hub-label">Unified collision kernel</span>
+            <span class="unify-hub-eq">$\beta(Kn_D,\, q_1,\, q_2,\, T)$</span>
+            <span class="unify-hub-desc">One function &mdash; valid from continuum to free-molecular</span>
+          </div>
+
+          <div class="unify-connector" aria-hidden="true"></div>
+
+          <div class="unify-output">
+            <span class="unify-output-label">Population Balance Equation</span>
+            <span class="unify-output-eq">$\partial n / \partial t = C[n;\,\beta]$</span>
+            <span class="unify-output-desc">Macro-scale aerosol simulation using the unified kernel</span>
+          </div>
         </div>
       </div>
     </div>
@@ -434,7 +463,6 @@
   </footer>
 
   <!-- =================== CDN LIBRARIES =================== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- =================== APP SCRIPTS =================== -->
@@ -442,7 +470,6 @@
   <script src="js/pbe_simulation.js"></script>
   <script src="js/regime_slider.js"></script>
   <script src="js/collision_2d.js"></script>
-  <script src="js/pinn_diagram.js"></script>
   <script src="js/qrcode_init.js"></script>
 
 </body>

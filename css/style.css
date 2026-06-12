@@ -707,6 +707,126 @@ input[type="range"]::-moz-range-thumb {
 .badge-green  { background: rgba(0,255,136,0.12);  color: var(--accent-green); }
 
 /* ============================================================
+   UNIFICATION DIAGRAM (Synthesis)
+   ============================================================ */
+.unify-diagram {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 28px 24px 32px;
+}
+
+.unify-sources {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.unify-source {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 20px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255,255,255,0.02);
+}
+
+.unify-cyan   { border-color: rgba(0,212,255,0.25); }
+.unify-orange { border-color: rgba(255,107,53,0.25); }
+.unify-green  { border-color: rgba(0,255,136,0.25); }
+
+.unify-paper {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.unify-regime {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.unify-cyan   .unify-regime { color: var(--accent-cyan); }
+.unify-orange .unify-regime { color: var(--accent-orange); }
+.unify-green  .unify-regime { color: var(--accent-green); }
+
+.unify-kn {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.unify-role {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+.unify-arrows {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: 56px;
+  margin: 8px auto 0;
+}
+
+.unify-hub,
+.unify-output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 22px 24px;
+  border-radius: 12px;
+  margin: 0 auto;
+  max-width: 520px;
+}
+
+.unify-hub {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(255,107,53,0.06), rgba(0,255,136,0.06));
+}
+
+.unify-hub-label,
+.unify-output-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.unify-hub-eq,
+.unify-output-eq {
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
+
+.unify-hub-desc,
+.unify-output-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.unify-connector {
+  width: 1px;
+  height: 28px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08));
+}
+
+.unify-output {
+  border: 1px solid rgba(0,212,255,0.22);
+  background: rgba(0,212,255,0.04);
+}
+
+/* ============================================================
    RESEARCH QUESTION
    ============================================================ */
 .research-question {
@@ -1047,6 +1167,9 @@ footer {
 @media (max-width: 600px) {
   .research-question { padding: 28px 20px; }
   .bridge-node { padding: 20px; }
+  .unify-sources { grid-template-columns: 1fr; }
+  .unify-arrows { display: none; }
+  .unify-connector { height: 16px; }
   [style*="grid-template-columns:repeat(3"] {
     grid-template-columns: 1fr !important;
   }
