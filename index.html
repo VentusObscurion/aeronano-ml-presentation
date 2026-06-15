@@ -89,9 +89,9 @@
         </a>
         <a href="#paper3" class="paper-card card-green" style="text-decoration:none;">
           <div class="paper-card-number">Paper 03 &mdash; Free-Molecular Regime</div>
-          <h3>Neural Network Collision Rate Model for &lt;3 nm TiO&#x2082; Nanoclusters</h3>
-          <p class="paper-authors">Tamadate, Yang &amp; Hogan Jr. (2022) &middot; Aerosol Science &amp; Technology</p>
-          <span class="tag">MLP &middot; MD &middot; Sub-3 nm</span>
+          <h3>Neural Network Coagulation Rate Model for &lt;3 nm TiO&#x2082; Nanoclusters</h3>
+          <p class="paper-authors">Tamadate, Yang &amp; Hogan Jr. (2023) &middot; Journal of Chemical Physics</p>
+          <span class="tag">NN &middot; MD &middot; Sub-3 nm</span>
         </a>
       </div>
 
@@ -120,7 +120,7 @@
           </div>
           <div class="qa-block">
             <div class="qa-label qa-found">What they found</div>
-            <p>The PINN predicts particle size distributions far more accurately than a plain neural network under noisy conditions. Because it <em>knows</em> the underlying physics, it cannot be fooled by measurement errors &mdash; it stays physically consistent even with bad data.</p>
+            <p>The PINN predicts particle size distributions more accurately than a plain neural network under noisy conditions &mdash; both approaches can capture the general shape, but only the PBNN enforces physical constraints like mass conservation. As noise increases, the PBNN degrades more gracefully than a constraint-free ANN. Crucially, the framework solves both the <em>forward</em> problem (predict the distribution) and the <em>inverse</em> problem &mdash; identifying kernel parameters directly from measurement data.</p>
           </div>
           <div class="paper-meta">
             <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">Physics-informed deep learning for modelling particle aggregation and breakage processes</span></div>
@@ -234,7 +234,7 @@
           </div>
           <div class="qa-block">
             <div class="qa-label qa-found">What they found</div>
-            <p>All these random collision times collapse onto a single, <strong>universal dimensionless curve H(Kn)</strong> &mdash; valid from the purely diffusive continuum regime all the way to the ballistic free-molecular regime. One curve to rule them all.</p>
+            <p>All these random collision times collapse onto a single, <strong>universal dimensionless curve $H(Kn_D)$</strong> &mdash; valid from the purely diffusive continuum regime all the way to the ballistic free-molecular regime. Here, $Kn_D$ is the <em>diffusive</em> Knudsen number (distinct from the momentum-based $Kn$), defined so that $Kn_D \to 0$ in the continuum and $Kn_D \to \infty$ in the free-molecular limit. The paper derives this curve separately for <em>single-entity</em> (particle&ndash;vapor molecule) and <em>two-entity</em> (particle&ndash;particle) collisions &mdash; an important distinction often overlooked. The authors note that the approach provides an approximation of the true $H(Kn_D)$; further work remains needed for low-mass vapor molecules and non-isothermal conditions.</p>
           </div>
           <div class="paper-meta">
             <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">Determination of the Transition Regime Collision Kernel from Mean First Passage Times</span></div>
@@ -251,7 +251,7 @@
   <!-- ===================== SECTION 4: PAPER 3 ===================== -->
   <section id="paper3" class="section">
     <div class="container">
-      <span class="section-label">Paper 03 &mdash; Tamadate, Yang &amp; Hogan Jr. (2022) &middot; Aerosol Science &amp; Technology</span>
+      <span class="section-label">Paper 03 &mdash; Tamadate, Yang &amp; Hogan Jr. (2023) &middot; Journal of Chemical Physics</span>
       <h2 class="section-title">The Free-Molecular Regime:<br>A Neural Network Trained on Atomic Collisions</h2>
 
       <div class="content-grid">
@@ -262,18 +262,18 @@
           </div>
           <div class="qa-block">
             <div class="qa-label qa-did">What they did</div>
-            <p>They ran thousands of <strong>Molecular Dynamics (MD) simulations</strong> &mdash; watching TiO&#x2082; clusters collide atom-by-atom at different speeds and impact angles. They then trained a <em>Multi-Layer Perceptron (MLP)</em> on the results to predict: will they stick or bounce?</p>
+            <p>They ran thousands of <strong>Molecular Dynamics (MD) simulations</strong> &mdash; watching TiO&#x2082; clusters collide atom-by-atom. They then trained a <em>neural network (NN)</em> with three hidden layers (10&ndash;5&ndash;5 neurons, Adam optimizer, cross-entropy loss) on the results. The NN takes four inputs &mdash; particle diameters $D_{p,i}$, $D_{p,j}$, impact parameter $b$, and initial relative velocity $v_0$ &mdash; and predicts: will they stick or bounce?</p>
           </div>
           <div class="qa-block">
             <div class="qa-label qa-found">What they found</div>
-            <p>The neural network predicts collision outcomes with <strong>&gt;95% accuracy</strong>. It captures subtle effects like <em>dipole&ndash;dipole attraction</em> that classical models ignore &mdash; leading to an effectively larger capture cross-section than pure geometry would predict.</p>
+            <p>The neural network predicts collision outcomes with <strong>&gt;95% accuracy</strong>. It captures subtle effects like <em>dipole&ndash;dipole attraction</em> that classical models ignore &mdash; leading to an effectively larger capture cross-section. Enhancement factors reach <strong>~20&times;</strong> at 300&nbsp;K and decrease to <strong>~2&times;</strong> at 1000&nbsp;K compared to the rigid-sphere prediction.</p>
           </div>
           <div class="paper-meta">
-            <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">A Neural Network Parametrized Collision Rate Model for &lt;3 nm TiO&#x2082; Nanoclusters</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Title</span><span class="meta-val">A neural network parametrized coagulation rate model for &lt;3 nm TiO&#x2082; nanoclusters</span></div>
             <div class="paper-meta-row"><span class="meta-key">Authors</span><span class="meta-val">T. Tamadate, S. Yang, C. J. Hogan Jr.</span></div>
-            <div class="paper-meta-row"><span class="meta-key">Year</span><span class="meta-val">2022</span></div>
-            <div class="paper-meta-row"><span class="meta-key">Journal</span><span class="meta-val">Aerosol Science and Technology, 56, 915&ndash;929</span></div>
-            <div class="paper-meta-row"><span class="meta-key">DOI</span><span class="meta-val"><a href="https://doi.org/10.1080/02786826.2022.2080052" target="_blank" rel="noopener">10.1080/02786826.2022.2080052</a></span></div>
+            <div class="paper-meta-row"><span class="meta-key">Year</span><span class="meta-val">2023</span></div>
+            <div class="paper-meta-row"><span class="meta-key">Journal</span><span class="meta-val">Journal of Chemical Physics, 158, 084301</span></div>
+            <div class="paper-meta-row"><span class="meta-key">DOI</span><span class="meta-val"><a href="https://doi.org/10.1063/5.0137345" target="_blank" rel="noopener">10.1063/5.0137345</a></span></div>
           </div>
         </div>
         <div class="content-viz">
@@ -282,11 +282,11 @@
                   style="width:100%; border-radius:8px; background:#050510; display:block; touch-action:manipulation;"></canvas>
           <div class="slider-group" style="margin-top:12px;">
             <div class="slider-row">
-              <span class="slider-label">Impact angle: <span id="angle-val">20&deg;</span></span>
+              <span class="slider-label">Impact parameter $b$: <span id="angle-val">20&deg;</span></span>
               <input type="range" id="angle-slider" min="0" max="85" value="20" step="1" style="touch-action:none;">
             </div>
             <div class="slider-row">
-              <span class="slider-label">Temperature: <span id="temp-val">1.0</span></span>
+              <span class="slider-label">Rel. velocity $v_0$ (norm.): <span id="temp-val">1.0</span></span>
               <input type="range" id="temp-slider" min="0.1" max="4.0" value="1.0" step="0.1" style="touch-action:none;">
             </div>
           </div>
@@ -362,9 +362,9 @@
         <tbody>
           <tr>
             <td>Chen et al. (2021)</td>
-            <td>PINN framework for PBE — physically consistent, automatic differentiation through the PDE</td>
+            <td>PINN framework for PBE — solves forward problem (PSD prediction) <em>and</em> inverse problem (kernel parameter identification from data); physically consistent via PDE loss</td>
             <td><span class="badge badge-cyan">Macro</span></td>
-            <td>Kernel $\beta$ is analytical &amp; simplified — no nano-scale data can enter the model</td>
+            <td>Can only fit parameters of a pre-assumed kernel form — cannot discover kernel structure; limited to the continuum-regime analytical kernel</td>
           </tr>
           <tr>
             <td>Gopalakrishnan &amp; Hogan (2011)</td>
@@ -373,8 +373,8 @@
             <td>Hard-sphere only — ignores van der Waals forces, charges, structural deformations</td>
           </tr>
           <tr>
-            <td>Tamadate et al. (2022)</td>
-            <td>MLP on MD data — accurate $\beta$ for sub-3 nm TiO₂ where standard theory breaks down</td>
+            <td>Tamadate et al. (2023)</td>
+            <td>NN on MD data — accurate $\beta$ for sub-3 nm TiO₂ where standard theory breaks down</td>
             <td><span class="badge badge-green">Nano</span></td>
             <td>Black-box model — TiO₂-specific, no physics constraints, no generalizability</td>
           </tr>
